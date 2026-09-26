@@ -1,6 +1,5 @@
 package org.topiinho.itensclumps;
 
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,7 +26,7 @@ public class ClumpHandler {
             return;
         }
 
-        if (!(event.getEntity() instanceof ItemEntity newItemEntity) || newItemEntity.getType() != EntityType.ITEM || !canClump(newItemEntity)) {
+        if (!(event.getEntity() instanceof ItemEntity newItemEntity) || newItemEntity.getClass() != ItemEntity.class || !canClump(newItemEntity)) {
             return;
         }
 
@@ -123,13 +122,19 @@ public class ClumpHandler {
     }
 
     private static boolean isClumpable(ItemEntity entity) {
-        return entity.getType() == EntityType.ITEM || entity.getType() == ModEntityTypes.CLUMP_ENTITY.get();
+        return entity.getClass() == ItemEntity.class || entity.getClass() == ClumpItemEntity.class;
+    }
+
+    private static boolean hasModData(ItemEntity entity) {
+        return entity.persistentData != null && !entity.persistentData.isEmpty();
     }
 
     private static boolean canClump(ItemEntity entity) {
         return entity.isAlive()
                 && entity.pickupDelay != INFINITE_PICKUP_DELAY
                 && entity.age != INFINITE_LIFETIME
-                && entity.age < LIFETIME;
+                && entity.age < LIFETIME
+                && !hasModData(entity);
     }
+
 }
