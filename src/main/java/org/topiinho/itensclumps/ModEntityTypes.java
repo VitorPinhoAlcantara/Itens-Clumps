@@ -1,6 +1,8 @@
 package org.topiinho.itensclumps;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -15,5 +17,5 @@ public class ModEntityTypes {
                                         .eyeHeight(EntityType.ITEM.getDimensions().eyeHeight())
                                         .clientTrackingRange(EntityType.ITEM.clientTrackingRange())
                                         .updateInterval(EntityType.ITEM.updateInterval())
-                                        .build("clump_item"));
+                                        .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(ItensClumps.MODID, "clump_item"))));
 }
